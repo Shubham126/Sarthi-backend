@@ -5,6 +5,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const aiRoutes = require("./routes/aiRoutes");
 const authRoutes = require("./routes/authRoutes");
+const mentorRoutes = require("./routes/mentorRoutes");
 const connectDB = require("./config/db");
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ app.use("/api", studentRoutes);
 app.use("/api", reviewRoutes);
 app.use("/api", aiRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api", mentorRoutes);
 
 // Test route
 app.get("/", (req, res) => {

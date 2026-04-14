@@ -1,15 +1,29 @@
 const Review = require("../models/Review");
+const User = require("../models/User");
 
 // 👨‍🏫 Mentor adds review
 const addReview = async (req, res) => {
   try {
-    const mentorId = req.user.id; // from JWT
+    const mentorId = req.user.id;
     const { studentId, review } = req.body;
 
     if (!studentId || !review) {
       return res.status(400).json({
         success: false,
         message: "studentId and review are required",
+      });
+    }
+
+    // 🔒 VERIFY STUDENT BELONGS TO THIS MENTOR
+    const student = await User.findOne({
+      _id: studentId,
+      assignedMentor: mentorId,
+    });
+
+    if (!student) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only review your assigned students",
       });
     }
 
@@ -25,7 +39,7 @@ const addReview = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("ADD REVIEW ERROR:", error);
+    console.error(error);
     res.status(500).json({
       success: false,
       message: "Error adding review",
