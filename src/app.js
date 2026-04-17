@@ -7,6 +7,7 @@ const aiRoutes = require("./routes/aiRoutes");
 const authRoutes = require("./routes/authRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const connectDB = require("./config/db");
+const adminRoutes = require("./routes/adminRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api", reviewRoutes);
 app.use("/api", aiRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", mentorRoutes);
+app.use("/api", adminRoutes);
 
 // Test route
 app.get("/", (req, res) => {
